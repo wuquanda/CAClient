@@ -1,19 +1,82 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>属性撤销</title>
+</head>
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
-  </body>
+<script type="text/javascript">
+  var detail_div1 = 1;
+  function add_div1() {
+    var e = document.getElementById("attributes");
+    var div = document.createElement("div");
+    div.className = "form-group";
+    div.id = "attributes" + detail_div1;
+    div.innerHTML = e.innerHTML;
+    document.getElementById("form1").appendChild(div);
+    detail_div1++;
+  }
+
+  function del_div1() {
+    var id = "attributes" + (detail_div1 - 1).toString();
+    var e = document.getElementById(id);
+    document.getElementById("form1").removeChild(e);
+    detail_div1--;
+  }
+
+  var detail_div2 = 1;
+  function add_div2() {
+    var e = document.getElementById("users");
+    var div = document.createElement("div");
+    div.className = "form-group";
+    div.id = "users" + detail_div2;
+    div.innerHTML = e.innerHTML;
+    document.getElementById("form2").appendChild(div);
+    detail_div2++;
+  }
+
+  function del_div2() {
+    var id = "users" + (detail_div2 - 1).toString();
+    var e = document.getElementById(id);
+    document.getElementById("form2").removeChild(e);
+    detail_div2--;
+  }
+
+</script>
+<script src="app/renderer/revokeAtrrs.js"></script>
+<body>
+  <div style="float: left;width: 180px">
+    <form id="form1" role="form" method="post" class="formBuilder">
+      <div class="form-inline">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button"  id="add-btn1" onclick="add_div1()">+</button>&nbsp;&nbsp;&nbsp;
+        <button type="button"  id="del-btn1" onclick="del_div1()">-</button>
+      </div>
+      <div  id="attributes">
+        <div class="form-inline">
+          <label for="attribute" >属性值</label>
+          <input  id="attribute"/>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div style="float: right;width: 360px">
+    <form id="form2" role="form" method="post" class="formBuilder">
+      <div class="form-inline">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button"  id="add-btn2" onclick="add_div2()">+</button>&nbsp;&nbsp;&nbsp;
+        <button type="button"  id="del-btn2" onclick="del_div2()">-</button>
+      </div>
+      <div  id="users">
+        <div class="form-inline">
+          <label for="user" >属性值</label>
+          <input  id="user" style="width: 260px"/>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <button onclick="revokeAttr()"> 确定</button>
+</body>
+
 </html>
